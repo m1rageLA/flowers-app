@@ -2,7 +2,11 @@ import { Tabs } from "expo-router";
 import React from "react";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { MaterialCommunityIcons, Ionicons, Foundation } from "@expo/vector-icons";
+import {
+  MaterialCommunityIcons,
+  Ionicons,
+  Foundation,
+} from "@expo/vector-icons";
 import { variables } from "../../assets/variables";
 
 export default function TabLayout() {
@@ -13,7 +17,7 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
-        tabBarShowLabel: false, 
+        tabBarShowLabel: false,
       }}
     >
       <Tabs.Screen
@@ -23,19 +27,23 @@ export default function TabLayout() {
             <MaterialCommunityIcons
               name="flower-tulip"
               size={24}
-              color={focused ? variables.BUTTONS.ACTIVE : variables.BUTTONS.DEFAULT}
+              color={
+                focused ? variables.BUTTONS.ACTIVE : variables.BUTTONS.DEFAULT
+              }
             />
           ),
         }}
       />
       <Tabs.Screen
-        name="chat"
+        name="allChats"
         options={{
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
               name="chatbox"
               size={24}
-              color={focused ? variables.BUTTONS.ACTIVE : variables.BUTTONS.DEFAULT}
+              color={
+                focused ? variables.BUTTONS.ACTIVE : variables.BUTTONS.DEFAULT
+              }
             />
           ),
         }}
@@ -47,7 +55,9 @@ export default function TabLayout() {
             <Foundation
               name="list"
               size={24}
-              color={focused ? variables.BUTTONS.ACTIVE : variables.BUTTONS.DEFAULT}
+              color={
+                focused ? variables.BUTTONS.ACTIVE : variables.BUTTONS.DEFAULT
+              }
             />
           ),
         }}
@@ -59,9 +69,17 @@ export default function TabLayout() {
             <Ionicons
               name="settings-sharp"
               size={24}
-              color={focused ? variables.BUTTONS.ACTIVE : variables.BUTTONS.DEFAULT}
+              color={
+                focused ? variables.BUTTONS.ACTIVE : variables.BUTTONS.DEFAULT
+              }
             />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="detail"
+        options={{
+          tabBarButton: () => null,
         }}
       />
     </Tabs>

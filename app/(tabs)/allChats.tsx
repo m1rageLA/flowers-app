@@ -9,6 +9,7 @@ import {
 } from "react-native-gesture-handler";
 import { useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
+import { Link, router } from "expo-router";
 
 // Данные для списка чатов
 const DATA = [
@@ -109,22 +110,30 @@ const toTime = (time: string): Time => {
   throw new Error(`Invalid time format: ${time}`);
 };
 
+//-----------------------------------------
+//--------------- CHAT-ITEM ---------------
+//-----------------------------------------
+
 type ItemProps = {
   title: string;
   name: string;
   avatarUrl: string;
   sendTime: Time;
+  userId: Number;
 };
 
-const Item = ({ title, name, avatarUrl, sendTime }: ItemProps) => {
+const Item = ({ title, name, avatarUrl, sendTime, userId }: ItemProps) => {
   const [isHovered, setIsHovered] = useState(false);
-
+  const isToched = () => {
+    setIsHovered(true);
+    // тут нужно сделать navigate на компонент переписки "ChatDialogScreen"
+  };
+  const handlePress = () => {
+    // Выполнение навигации на экран чата с переданным userId
+    router.push(`/chat?#${userId}`);
+  };
   return (
-    <TouchableOpacity
-      style={isHovered ? [styles.item, styles.itemHovered] : styles.item}
-      onPressIn={() => setIsHovered(true)}
-      onPressOut={() => setIsHovered(false)}
-    >
+    <TouchableOpacity style={styles.item} onPress={handlePress}>
       <View style={styles.item__box}>
         <View style={{ flexDirection: "row" }}>
           <Image style={styles.avatar} source={{ uri: avatarUrl }} />
@@ -162,6 +171,7 @@ export default function ChatScreen() {
                 name={item.name}
                 avatarUrl={item.avatarUrl}
                 sendTime={item.sendTime}
+                userId={25}
               />
             )}
             keyExtractor={(item) => item.id}
@@ -172,10 +182,14 @@ export default function ChatScreen() {
   );
 }
 
+//-----------------------------------------
+//--------------- STYLES ---------------
+//-----------------------------------------
+
 const styles = StyleSheet.create({
   header: {
     height: 100,
-    padding: 30,
+    padding: 20,
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -183,7 +197,8 @@ const styles = StyleSheet.create({
     backgroundColor: variables.HEADER,
   },
   header__text: {
-    fontSize: 26,
+    fontSize: 28,
+    fontWeight: "700",
     color: variables.TEXT.LOGO,
   },
   container: {
@@ -192,7 +207,7 @@ const styles = StyleSheet.create({
   },
   chatBox: {
     flex: 1,
-    padding: 15,
+    padding: 10,
     paddingTop: 20,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
